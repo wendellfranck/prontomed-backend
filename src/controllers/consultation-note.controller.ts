@@ -5,22 +5,26 @@ import { createNoteSchema } from "../validations/consultation-note.validation";
 const service = new ConsultationNoteService();
 
 interface Params {
-  id: string;
+    id: string;
 }
 
 export class ConsultationNoteController {
     async create(req: Request<Params>, res: Response) {
         try {
-          const parsedBody = createNoteSchema.parse(req.body);
+            const parsedBody = createNoteSchema.parse(req.body);
+        
+            const note = await service.create({
+                appointmentId: req.params.id,
+                note: parsedBody.note,
+            });
       
-          const note = await service.create({
-            appointmentId: req.params.id,
-            note: parsedBody.note,
-          });
-      
-          return res.status(201).json(note);
-        } catch (error: any) {
-          return res.status(400).json({ message: error.errors ?? error.message });
+            return res.status(201).json(note);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                return res.status(400).json({ message: error.message });
+            }
+            
+            return res.status(400).json({ message: "Unexpected error" });
         }
     }
 

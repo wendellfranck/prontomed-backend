@@ -11,11 +11,15 @@ interface Params {
 export class PatientController {
     async create(req: Request, res: Response) {
         try {
-          const parsedData = createPatientSchema.parse(req.body);
-          const patient = await service.create(parsedData);
-          return res.status(201).json(patient);
-        } catch (error: any) {
-          return res.status(400).json({ message: error.errors ?? error.message });
+            const parsedData = createPatientSchema.parse(req.body);
+            const patient = await service.create(parsedData);
+            return res.status(201).json(patient);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                return res.status(400).json({ message: error.message });
+            }
+            
+            return res.status(400).json({ message: "Unexpected error" });
         }
     }
 
@@ -31,11 +35,15 @@ export class PatientController {
 
     async update(req: Request<Params>, res: Response) {
         try {
-          const parsedData = updatePatientSchema.parse(req.body);
-          const patient = await service.update(req.params.id, parsedData);
-          return res.json(patient);
-        } catch (error: any) {
-          return res.status(400).json({ message: error.errors ?? error.message });
+            const parsedData = updatePatientSchema.parse(req.body);
+            const patient = await service.update(req.params.id, parsedData);
+            return res.json(patient);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                return res.status(400).json({ message: error.message });
+            }
+            
+            return res.status(400).json({ message: "Unexpected error" });
         }
     }
 
