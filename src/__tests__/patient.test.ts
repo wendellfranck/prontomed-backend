@@ -16,6 +16,19 @@ describe("Patient API", () => {
         expect(response.status).toBe(201);
         expect(response.body).toHaveProperty("id");
     });
+
+    it("should return 400 for invalid email", async () => {
+        const response = await request(app).post("/patients").send({
+            name: "Teste Invalido",
+            email: "emailerrado",
+            birthDate: "1990-01-01",
+            sex: "M",
+            height: 1.8,
+            weight: 75,
+        });
+      
+        expect(response.status).toBe(400);
+    });
 });
 
 afterAll(async () => {
