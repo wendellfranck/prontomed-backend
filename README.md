@@ -12,7 +12,8 @@ API REST para sistema de prontuário eletrônico.
 - Docker
 - Zod (validação)
 - Swagger (documentação)
-- Jest (testes)
+- Jest (testes automatizados)
+- GitHub Actions (CI)
 
 ---
 
@@ -72,7 +73,11 @@ Regra de conflito de horário
 
 Registro de anotações
 
-Validação de dados
+Validação de dados com Zod
+
+Testes automatizados
+
+Pipeline CI com GitHub Actions
 
 ## 🏗 Arquitetura
 
@@ -80,8 +85,23 @@ Controllers
 
 Services
 
-Validações (Zod)
+Validações
 
 Prisma ORM
 
 Banco PostgreSQL
+
+Testes de integração
+
+
+## CI/CD
+
+A cada push na branch main:
+
+- Instala dependências
+
+- Executa migrations
+
+- Roda lint
+
+- Executa testes automatizados
