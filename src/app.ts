@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 
 app.use("/patients", patientRoutes);
 app.use("/appointments", appointmentRoutes);
-app.use("/appointments", consultationNoteRoutes);
+app.use("/", consultationNoteRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 export default app;

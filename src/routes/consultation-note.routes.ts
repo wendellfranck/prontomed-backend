@@ -4,7 +4,7 @@ import { ConsultationNoteController } from "../controllers/consultation-note.con
 const router = Router();
 const controller = new ConsultationNoteController();
 
-router.post("/:id/notes", controller.create);
+router.post("/appointments/:id/notes", controller.create);
 router.get("/patients/:id/notes", controller.listByPatient);
 
 export default router;
