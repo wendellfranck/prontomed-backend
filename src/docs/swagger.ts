@@ -90,6 +90,36 @@ export const swaggerDocument = {
             },
           },
         },
+        "/appointments": {
+          post: {
+            summary: "Criar agendamento",
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      patientId: { type: "string", format: "uuid" },
+                      dateTime: { type: "string", format: "date-time" }
+                    },
+                    required: ["patientId", "dateTime"]
+                  }
+                }
+              }
+            },
+            responses: {
+              201: { description: "Agendamento criado" },
+              400: { description: "Conflito de horário" }
+            }
+          },
+          get: {
+            summary: "Listar agendamentos",
+            responses: {
+              200: { description: "Lista de agendamentos" }
+            }
+          }
+        },
         "/appointments/{id}": {
           put: {
             summary: "Atualizar agendamento",
