@@ -131,22 +131,22 @@ export const swaggerDocument = {
                 schema: { type: "string", format: "uuid" },
               },
             ],
-            responses: {
-              200: { description: "Agendamento atualizado" },
-            },
-          },
-          requestBody: {
-            required: true,
-            content: {
-              "application/json": {
-                schema: {
-                  type: "object",
-                  properties: {
-                    dateTime: { type: "string", format: "date-time" }
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      dateTime: { type: "string", format: "date-time" }
+                    }
                   }
                 }
               }
-            }
+            },
+            responses: {
+              200: { description: "Agendamento atualizado" },
+            },
           },
           delete: {
             summary: "Excluir agendamento",
