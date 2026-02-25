@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AppointmentService } from "../services/appointment.service";
 import { createAppointmentSchema, updateAppointmentSchema } from "../validations/appointment.validation";
+import { Prisma } from "../generated/prisma/client";
 
 const service = new AppointmentService();
 
@@ -46,8 +47,27 @@ export class AppointmentController {
         try {
             await service.delete(req.params.id);
             return res.status(204).send();
-        } catch {
-            return res.status(404).json({ message: "Agendamento não encontrado" });
+        } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            
+                if (error.code === "P2025") {
+                  return res.status(404).json({
+                    message: "Agendamento não encontrado",
+                  });
+                }
+      
+            
+                if (error.code === "P2003") {
+                  return res.status(400).json({
+                    message:
+                      "Não é possível excluir um agendamento que possui anotações vinculadas",
+                  });
+                }
+            }
+      
+            return res.status(500).json({
+                message: "Erro interno no servidor",
+            });
         }
     }
 }

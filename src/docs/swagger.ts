@@ -135,6 +135,19 @@ export const swaggerDocument = {
               200: { description: "Agendamento atualizado" },
             },
           },
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    dateTime: { type: "string", format: "date-time" }
+                  }
+                }
+              }
+            }
+          },
           delete: {
             summary: "Excluir agendamento",
             parameters: [
