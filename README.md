@@ -61,37 +61,26 @@ npm test
 
 ## 📌 Funcionalidades
 
-Cadastro de pacientes
-
-Edição de pacientes
-
-Soft delete (LGPD)
-
-Cadastro de agendamentos
-
-Regra de conflito de horário
-
-Registro de anotações
-
-Validação de dados com Zod
-
-Testes automatizados
-
-Pipeline CI com GitHub Actions
+- [x] Cadastro de pacientes
+- [x] Edição de pacientes
+- [x] Soft delete (LGPD)
+- [x] Cadastro de agendamentos
+- [x] Regra de conflito de horário
+- [x] Registro de anotações
+- [x] Validação de dados com Zod
+- [x] Testes automatizados
+- [x] Pipeline CI com GitHub Actions
 
 ## 🏗 Arquitetura
 
-Controllers
+A aplicação segue uma arquitetura em camadas:
 
-Services
-
-Validações
-
-Prisma ORM
-
-Banco PostgreSQL
-
-Testes de integração
+- **Routes** → Definição das rotas da API
+- **Controllers** → Camada de entrada HTTP
+- **Services** → Regras de negócio
+- **Prisma** → Camada de acesso ao banco de dados
+- **Validações (Zod)** → Validação de entrada de dados
+- **Testes de integração** → Garantia de comportamento esperado
 
 
 ## CI/CD
@@ -100,8 +89,17 @@ A cada push na branch main:
 
 - Instala dependências
 
-- Executa migrations
+- Executa migrations com prisma migrate deploy
 
 - Roda lint
 
 - Executa testes automatizados
+
+
+## 🌐 Deploy
+
+API disponível em:
+https://prontomed-backend.onrender.com
+
+Documentação:
+https://prontomed-backend.onrender.com/docs
