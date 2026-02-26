@@ -24,6 +24,17 @@ npm install
 
 ```
 
+## 🔑 Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```
+env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/prontomed"
+PORT=3000
+NODE_ENV=development
+```
+
 ## 🐳 Subir banco com Docker
 
 ```bash
@@ -82,6 +93,47 @@ A aplicação segue uma arquitetura em camadas:
 - **Validações (Zod)** → Validação de entrada de dados
 - **Testes de integração** → Garantia de comportamento esperado
 
+
+## 📐 Modelagem do Banco de Dados
+
+A aplicação utiliza três entidades principais: Patient, Appointment e ConsultationNote, com relacionamentos 1:N conforme descrito abaixo:
+
+```mermaid
+erDiagram
+
+    PATIENT {
+        uuid id PK
+        string name
+        string phone
+        string email
+        datetime birthDate
+        string sex
+        float height
+        float weight
+        datetime deletedAt
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    APPOINTMENT {
+        uuid id PK
+        datetime dateTime
+        uuid patientId FK
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    CONSULTATION_NOTE {
+        uuid id PK
+        text note
+        uuid appointmentId FK
+        datetime createdAt
+    }
+
+    PATIENT ||--o{ APPOINTMENT : has
+    APPOINTMENT ||--o{ CONSULTATION_NOTE : has
+
+```
 
 ## CI/CD
 
