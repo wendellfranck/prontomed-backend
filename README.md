@@ -28,11 +28,11 @@ npm install
 
 Crie um arquivo `.env` na raiz do projeto:
 
-```
-env
+```env
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/prontomed"
 PORT=3000
 NODE_ENV=development
+JWT_SECRET="supersecretkey"
 ```
 
 ## 🐳 Subir banco com Docker
@@ -63,6 +63,12 @@ http://localhost:3000
 
 http://localhost:3000/docs
 
+## 🔐 Autenticação
+
+1. Utilize `POST /auth/register` para criar um usuário.
+2. Utilize `POST /auth/login` para obter o token JWT.
+3. No Swagger, clique em **Authorize** e insira apenas o token retornado.
+4. As demais rotas exigem autenticação.
 
 ## 🧪 Rodar testes
 
@@ -81,6 +87,8 @@ npm test
 - [x] Validação de dados com Zod
 - [x] Testes automatizados
 - [x] Pipeline CI com GitHub Actions
+- [x] Autenticação com JWT
+- [x] Middleware de proteção de rotas
 
 ## 🏗 Arquitetura
 
@@ -92,7 +100,6 @@ A aplicação segue uma arquitetura em camadas:
 - **Prisma** → Camada de acesso ao banco de dados
 - **Validações (Zod)** → Validação de entrada de dados
 - **Testes de integração** → Garantia de comportamento esperado
-
 
 ## 📐 Modelagem do Banco de Dados
 
@@ -146,7 +153,6 @@ A cada push na branch main:
 - Roda lint
 
 - Executa testes automatizados
-
 
 ## 🌐 Deploy
 
