@@ -5,6 +5,8 @@ import appointmentRoutes from "./routes/appointment.routes";
 import consultationNoteRoutes from "./routes/consultation-note.routes";
 import { swaggerDocument } from "./docs/swagger";
 import swaggerUi from "swagger-ui-express";
+import { authMiddleware } from "./middlewares/auth.middleware";
+import authRoutes from "./routes/auth.routes";
 
 const app = express();
 
@@ -18,9 +20,17 @@ app.get("/", (req, res) => {
     });
 });
 
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use("/auth", authRoutes);
+
+if (process.env.NODE_ENV !== "test") {
+    app.use(authMiddleware);
+}
+
 app.use("/patients", patientRoutes);
 app.use("/appointments", appointmentRoutes);
 app.use("/", consultationNoteRoutes);
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 export default app;

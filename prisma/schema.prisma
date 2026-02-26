@@ -51,3 +51,11 @@ model ConsultationNote {
   appointment   Appointment @relation(fields: [appointmentId], references: [id])
   appointmentId String
 }
+
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}

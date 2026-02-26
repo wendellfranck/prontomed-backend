@@ -13,7 +13,85 @@ export const swaggerDocument = {
           : "http://localhost:3000",
       },
     ],
+    components: { 
+      securitySchemes: { 
+        bearerAuth: { 
+          type: "http", 
+          scheme: "bearer", 
+          bearerFormat: "JWT", 
+        }, 
+      }, 
+    }, 
+    security: [{ 
+        bearerAuth: [] 
+    }],
     paths: {
+      "/auth/register": {
+        post: {
+          summary: "Registrar usuário",
+          security: [], // rota pública
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    email: { type: "string", format: "email" },
+                    password: { type: "string", example: "123456" }
+                  },
+                  required: ["email", "password"]
+                }
+              }
+            }
+          },
+          responses: {
+            201: { description: "Usuário criado com sucesso" },
+            400: { description: "Usuário já existe" }
+          }
+        }
+      },
+      
+      "/auth/login": {
+        post: {
+          summary: "Autenticar usuário",
+          security: [], // rota pública
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    email: { type: "string", format: "email" },
+                    password: { type: "string", example: "123456" }
+                  },
+                  required: ["email", "password"]
+                }
+              }
+            }
+          },
+          responses: {
+            200: {
+              description: "Token JWT retornado",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      token: {
+                        type: "string",
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            401: { description: "Credenciais inválidas" }
+          }
+        }
+      },
       "/patients": {
         get: {
           summary: "Listar pacientes",

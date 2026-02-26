@@ -32,3 +32,8 @@ export type Appointment = Prisma.AppointmentModel
  * 
  */
 export type ConsultationNote = Prisma.ConsultationNoteModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
